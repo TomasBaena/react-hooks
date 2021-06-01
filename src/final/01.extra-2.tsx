@@ -19,6 +19,8 @@ function UsernameForm({
   const formIsValid =
     usernameIsShortEnough && usernameIsLongEnough && usernameIsLowerCase
 
+  const displayErrorMessage = !formIsValid
+
   let errorMessage = null
   if (!usernameIsLowerCase) {
     errorMessage = 'Username must be lower case'
@@ -30,9 +32,7 @@ function UsernameForm({
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
-    if (!formIsValid) {
-      return
-    }
+    if (!formIsValid) return
 
     onSubmitUsername(username)
   }
@@ -50,10 +50,11 @@ function UsernameForm({
           type="text"
           value={username}
           onChange={handleChange}
+          aria-describedby={displayErrorMessage ? 'error-message' : undefined}
         />
       </div>
-      {!formIsValid ? (
-        <div className="error-message">{errorMessage}</div>
+      {displayErrorMessage ? (
+        <div id="error-message">{errorMessage}</div>
       ) : null}
       <button type="submit">Submit</button>
     </form>

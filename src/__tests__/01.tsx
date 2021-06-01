@@ -69,11 +69,11 @@ if (/(lower|\.length)/i.test(UsernameForm.toString())) {
         userEvent.type(input, `{selectall}jo`)
         // hard to assert on the specific message if they decide they want a different message
         // so we'll just assume that if it's showing up it's correct.
-        expect(document.querySelector('.error-message')).toHaveTextContent(/.+/)
+        expect(document.querySelector('#error-message')).toHaveTextContent(/.+/)
         userEvent.click(submit)
         expect(global.alert).not.toHaveBeenCalled()
       },
-      `Make sure to display the correct error message in a div with className="error-message" when the username is too short (like in "jo") and don't allow the form to be submitted when it's invalid.`,
+      `Make sure to display the correct error message in a div with id="error-message" when the username is too short (like in "jo") and don't allow the form to be submitted when it's invalid.`,
       {displayEl: true},
     )
 
@@ -82,11 +82,11 @@ if (/(lower|\.length)/i.test(UsernameForm.toString())) {
         userEvent.type(input, `{selectall}joejoejoejoe`)
         // hard to assert on the specific message if they decide they want a different message
         // so we'll just assume that if it's showing up it's correct.
-        expect(document.querySelector('.error-message')).toHaveTextContent(/.+/)
+        expect(document.querySelector('#error-message')).toHaveTextContent(/.+/)
         userEvent.click(submit)
         expect(global.alert).not.toHaveBeenCalled()
       },
-      `Make sure to display the correct error message in a div with className="error-message" when the username is too long (like in "joejoejoejoe") and don't allow the form to be submitted when it's invalid.`,
+      `Make sure to display the correct error message in a div with id="error-message" when the username is too long (like in "joejoejoejoe") and don't allow the form to be submitted when it's invalid.`,
       {displayEl: true},
     )
 
@@ -95,11 +95,11 @@ if (/(lower|\.length)/i.test(UsernameForm.toString())) {
         userEvent.type(input, `{selectall}Joe`)
         // hard to assert on the specific message if they decide they want a different message
         // so we'll just assume that if it's showing up it's correct.
-        expect(document.querySelector('.error-message')).toHaveTextContent(/.+/)
+        expect(document.querySelector('#error-message')).toHaveTextContent(/.+/)
         userEvent.click(submit)
         expect(global.alert).not.toHaveBeenCalled()
       },
-      `Make sure to display the correct error message in a div with className="error-message" when the username has a capital letter (like in "Joe") and don't allow the form to be submitted when it's invalid.`,
+      `Make sure to display the correct error message in a div with id="error-message" when the username has a capital letter (like in "Joe") and don't allow the form to be submitted when it's invalid.`,
       {displayEl: true},
     )
 

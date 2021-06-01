@@ -27,13 +27,15 @@ function UsernameForm({
     'username',
     initialUsername,
   )
-  const [showError, setShowError] = React.useState(false)
+  const [touched, setTouched] = React.useState(false)
 
   const usernameIsLowerCase = username === username.toLowerCase()
   const usernameIsLongEnough = username.length >= 3
   const usernameIsShortEnough = username.length <= 10
   const formIsValid =
     usernameIsShortEnough && usernameIsLongEnough && usernameIsLowerCase
+
+  const displayErrorMessage = touched && !formIsValid
 
   let errorMessage = null
   if (!usernameIsLowerCase) {
@@ -46,10 +48,8 @@ function UsernameForm({
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
-    if (!formIsValid) {
-      setShowError(true)
-      return
-    }
+    setTouched(true)
+    if (!formIsValid) return
 
     onSubmitUsername(username)
   }
@@ -59,7 +59,7 @@ function UsernameForm({
   }
 
   function handleBlur() {
-    setShowError(true)
+    setTouched(true)
   }
 
   return (
@@ -74,10 +74,11 @@ function UsernameForm({
           onBlur={handleBlur}
           pattern="[a-z]{3,10}"
           required
+          aria-describedby={displayErrorMessage ? 'error-message' : undefined}
         />
       </div>
-      {showError && !formIsValid ? (
-        <div role="alert" className="error-message">
+      {displayErrorMessage ? (
+        <div role="alert" id="error-message">
           {errorMessage}
         </div>
       ) : null}
