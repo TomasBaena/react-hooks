@@ -9,10 +9,11 @@
 // store state in localstorage
 
 import * as React from 'react'
+import { useLocalStorageState } from '../utils';
 
 function Board() {
   // 🐨 squares is the state for this component. Add useState for squares
-  const [squares, setSquares] = React.useState(() => JSON.parse(localStorage.getItem('squares')) || Array(9).fill(null));
+  const [squares, setSquares] = useLocalStorageState('squares', Array(9).fill(null))
 
   // 🐨 We'll need the following bits of derived state:
   // - nextValue ('X' or 'O')
@@ -25,7 +26,7 @@ function Board() {
   const winner = calculateWinner(squares)
   const status = calculateStatus(winner, squares, nextValue)
   React.useEffect(()=>localStorage.setItem('squares', JSON.stringify(squares)),[squares]);
-
+  
   // This is the function your square click handler will call. `square` should
   // be an index. So if they click the center square, this will be `4`.
   function selectSquare(square) {
