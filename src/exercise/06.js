@@ -32,24 +32,11 @@
 // 6.3 use object in state to reduce the amount of state setting and initializations
 // 6.4 error boundries https://reactjs.org/docs/error-boundaries.html
 // 6.5 remount error boundry by adding key prop to error boundry
+// 6.6 use react-error-boundry instead
 
 import * as React from 'react'
 import {fetchPokemon, PokemonDataView, PokemonForm, PokemonInfoFallback} from '../pokemon'
-
-class ErrorBoundary extends React.Component {
-  state = {error: null}
-  static getDerivedStateFromError(error) {
-    return {error}
-  }
-  render() {
-    const {error} = this.state
-    if (error) {
-      return <this.props.FallbackComponent error={error} />
-    }
-
-    return this.props.children
-  }
-}
+import {ErrorBoundary} from 'react-error-boundary'
 
 function PokemonInfo({pokemonName}) {
   const [state, setState] = React.useState({
