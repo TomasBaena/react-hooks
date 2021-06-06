@@ -34,6 +34,7 @@
 // 6.5 remount error boundry by adding key prop to error boundry
 // 6.6 use react-error-boundry instead
 // 6.7 reset state of eroor boundary when user clicks button
+// 6.8 use reset keys so the user doesn't have to click the try again button 
 
 import * as React from 'react'
 import {fetchPokemon, PokemonDataView, PokemonForm, PokemonInfoFallback} from '../pokemon'
@@ -87,7 +88,7 @@ function App() {
       <PokemonForm pokemonName={pokemonName} onSubmit={handleSubmit} />
       <hr />
       <div className="pokemon-info">
-        <ErrorBoundary FallbackComponent={ErrorFallback} onReset={handleReset}>
+        <ErrorBoundary FallbackComponent={ErrorFallback} resetKeys={[pokemonName]} onReset={handleReset}>
           <PokemonInfo pokemonName={pokemonName} />
         </ErrorBoundary>
       </div>
