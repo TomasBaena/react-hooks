@@ -29,27 +29,24 @@
 // })
 
 // 6.2 using status organize code
+// 6.3 use object in state to reduce the amount of state setting and initializations
 import * as React from 'react'
 import {fetchPokemon, PokemonDataView, PokemonForm, PokemonInfoFallback} from '../pokemon'
 
 function PokemonInfo({pokemonName}) {
-  const [pokemon, setPokemon] = React.useState(null)
-  const [error, setError] = React.useState(null)
-  const [status, setStatus] = React.useState('idle')
+  const [state, setState] = React.useState({
+    status: 'idle',
+    pokemon: null,
+    error: null
+  })
+  const {status, pokemon, error} = state;
 
   React.useEffect(()=>{
     if (!pokemonName) return
-    setStatus('pending')
-    setPokemon(null)
+    setState({status: 'pending', pokemon: null})
     fetchPokemon(pokemonName).then( 
-      pokemonData => {
-        setPokemon(pokemonData)
-        setStatus('resolved')
-      },
-      error => {
-        setError(error)
-        setStatus('rejected')
-      })
+      pokemonData => setState({status: 'resolved', pokemon: pokemonData}),
+      error => setState({status: 'rejected', error: error}))
   }, [pokemonName])
   if (status == 'idle') return 'Submit a pokemon'
   else if (status == 'pending') return <PokemonInfoFallback name={pokemonName} />
