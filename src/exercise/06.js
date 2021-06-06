@@ -31,6 +31,7 @@
 // 6.2 using status organize code
 // 6.3 use object in state to reduce the amount of state setting and initializations
 // 6.4 error boundries https://reactjs.org/docs/error-boundaries.html
+// 6.5 remount error boundry by adding key prop to error boundry
 
 import * as React from 'react'
 import {fetchPokemon, PokemonDataView, PokemonForm, PokemonInfoFallback} from '../pokemon'
@@ -93,7 +94,7 @@ function App() {
       <PokemonForm pokemonName={pokemonName} onSubmit={handleSubmit} />
       <hr />
       <div className="pokemon-info">
-        <ErrorBoundary FallbackComponent={ErrorFallback}>
+        <ErrorBoundary key={pokemonName} FallbackComponent={ErrorFallback}>
           <PokemonInfo pokemonName={pokemonName} />
         </ErrorBoundary>
       </div>
